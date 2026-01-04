@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syntrax - Soluciones Tecnológicas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF4500",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#0A0A0A",
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                        sans: ["Montserrat", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDidBcW-okUYhnuhFB2WdujK0ouEpA3CiYShTBVwZ8b3TuhurRorfGr0239B4hVfUXNCGfSLX0tjMk4KV67qA9GB93WrAaRRfXdOxBLanWkvcPfANKKQ3sTs9deVuXwoP5h0cqVGBxNsMbEtfoRsebLcZ9OQJaxV6rxgsqTSZm-foGWAc7VouCIYWpPXrc5Zbx6UIqifIdMYuQyvA8BpR4Wn1sk5_HiTT1-ESX8ZYDWpO-yB5xfRAbctXrHYnM5TvIBDfu3pfenBg');
+            background-size: cover;
+            background-position: center;
+        }
+        .about-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6Fi1fxdK-CChgvl5_YFyfCP_x_8OEAyYYjLqMpLp8s0Uhrqwc8WRVJkq6t-qucBzvQfouYjnmU4nmaE3O1nfQ3o700qbDK9RDn-MXOJ_JmHoDIAf1xlcr5MdE63PsXAIppj4chALCMd9UdOrGHmpgQ0J7morcgOafVeXDbHIZU939SyrhtCGC2Y_xa8NDuJNp5H3hA5F8R0rt0-FbfDp_gsSnz5Vz9GBUVrhDI4T1770sDuAz8fwOXkZ-Jrv-_ZIb_W2y6PRolhQ');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-background-light dark:bg-background-dark text-stone-800 dark:text-stone-200">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
