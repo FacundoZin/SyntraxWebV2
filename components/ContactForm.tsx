@@ -125,8 +125,12 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
     
-    // Seguimos exactamente la documentación:
-    formData.append("access_key", process.env.WEB3FORMS_ACCESS_KEY);
+    // Usamos process.env como en AssistantFab.tsx
+    const accessKey = process.env.WEB3FORMS_ACCESS_KEY || "";
+    
+    console.log("Clave detectada antes de enviar:", accessKey);
+    
+    formData.append("access_key", accessKey);
     formData.append("subject", "Nueva consulta de cliente - Syntrax Software");
     formData.append("from_name", "Syntrax Web");
 
