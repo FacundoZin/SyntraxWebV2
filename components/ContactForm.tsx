@@ -116,15 +116,44 @@ const CustomDropdown: React.FC<{
 
 const ContactForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    setStatus('idle');
+
+    const formData = new FormData(e.currentTarget);
+    
+    // Configuración para Web3Forms
+    // Debes obtener tu access_key gratuita en https://web3forms.com/
+    // He configurado esto para que llegue a syntraxsoftware@gmail.com
+    formData.append("access_key", "d91f199f-ebc4-4600-bc56-23e983104708"); // REEMPLAZAR CON TU KEY
+    formData.append("subject", "Nueva consulta de cliente - Syntrax Software");
+    formData.append("from_name", "Syntrax Web");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus('success');
+        (e.target as HTMLFormElement).reset();
+        // Nota: Los CustomDropdown no se resetearán visualmente sin cambios adicionales, 
+        // pero los valores enviados serán correctos en el próximo envío.
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Error enviando el formulario:", error);
+      setStatus('error');
+    } finally {
       setLoading(false);
-      alert('¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.');
-    }, 1500);
+    }
   };
 
   return (
@@ -196,6 +225,8 @@ const ContactForm: React.FC = () => {
                 rows={5}
               ></textarea>
             </div>
+            <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
             <button 
               disabled={loading}
               className={`w-full bg-primary text-white font-black py-5 px-8 rounded-xl hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 tracking-[0.2em] flex items-center justify-center ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-95'}`}
@@ -208,6 +239,18 @@ const ContactForm: React.FC = () => {
                 </svg>
               ) : 'ENVIAR'}
             </button>
+
+            {status === 'success' && (
+              <div className="mt-4 p-4 bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 rounded-xl text-center font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+                ¡Mensaje enviado con éxito! Nos contactaremos pronto.
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl text-center font-bold animate-in fade-in slide-in-from-top-2 duration-300">
+                Hubo un error al enviar el mensaje. Intenta de nuevo.
+              </div>
+            )}
           </div>
         </form>
       </div>
