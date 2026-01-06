@@ -125,10 +125,12 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
     
-    // Usamos process.env como en AssistantFab.tsx
-    const accessKey = process.env.WEB3FORMS_ACCESS_KEY || "";
+    // Intentamos detectar la clave de todas las formas posibles
+    const accessKey = process.env.WEB3FORMS_ACCESS_KEY || 
+                     import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 
+                     "";
     
-    console.log("Clave detectada antes de enviar:", accessKey);
+    console.log("Clave detectada antes de enviar:", accessKey ? "Clave presente (UUID)" : "VACÍA");
     
     formData.append("access_key", accessKey);
     formData.append("subject", "Nueva consulta de cliente - Syntrax Software");
