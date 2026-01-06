@@ -125,9 +125,9 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
     
-    // Intentamos detectar la clave de todas las formas posibles
-    const accessKey = process.env.WEB3FORMS_ACCESS_KEY || 
-                     import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 
+    // Priorizamos el estándar de Vite (VITE_) que es el más seguro en producción
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 
+                     process.env.WEB3FORMS_ACCESS_KEY || 
                      "";
     
     console.log("Clave detectada antes de enviar:", accessKey ? "Clave presente (UUID)" : "VACÍA");
