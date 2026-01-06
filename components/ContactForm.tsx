@@ -139,6 +139,7 @@ const ContactForm: React.FC = () => {
       });
 
       const data = await response.json();
+      console.log("Web3Forms API Response:", data);
 
       if (data.success) {
         setStatus('success');
@@ -147,6 +148,7 @@ const ContactForm: React.FC = () => {
         setStatus('error');
       }
     } catch (error) {
+      console.error("Critical submission error:", error);
       setStatus('error');
     } finally {
       setLoading(false);
