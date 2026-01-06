@@ -125,30 +125,19 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
     
-    // Priorizamos el estándar de Vite (VITE_) que es el más seguro en producción
-    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 
-                     process.env.WEB3FORMS_ACCESS_KEY || 
-                     "";
-    
-    console.log("Clave detectada antes de enviar:", accessKey ? "Clave presente (UUID)" : "VACÍA");
-    
-    formData.append("access_key", accessKey);
+    // Hardcoded key for immediate functionality
+    formData.append("access_key", "d91f199f-ebc4-4600-bc56-23e983104708");
     formData.append("subject", "Nueva consulta de cliente - Syntrax Software");
     formData.append("from_name", "Syntrax Web");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData // Enviamos FormData directo, sin cabeceras manuales
+        body: formData
       });
 
       const data = await response.json();
-      
-      // Logeamos TODO para saber qué está pasando
-      console.log("--- DEBUG WEB3FORMS ---");
-      console.log("Status Code:", response.status);
-      console.log("Response Data:", data);
-      console.log("------------------------");
+      console.log("Web3Forms API Response:", data);
 
       if (data.success) {
         setStatus('success');
@@ -157,7 +146,6 @@ const ContactForm: React.FC = () => {
         setStatus('error');
       }
     } catch (error) {
-      console.error("Fetch error:", error);
       setStatus('error');
     } finally {
       setLoading(false);
