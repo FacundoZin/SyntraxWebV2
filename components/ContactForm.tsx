@@ -125,31 +125,33 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(e.currentTarget);
     
-    // Configuración para Web3Forms
-    // Debes obtener tu access_key gratuita en https://web3forms.com/
-    // He configurado esto para que llegue a syntraxsoftware@gmail.com
-    formData.append("access_key", "d91f199f-ebc4-4600-bc56-23e983104708"); // REEMPLAZAR CON TU KEY
+    // Seguimos exactamente la documentación:
+    formData.append("access_key", process.env.WEB3FORMS_ACCESS_KEY);
     formData.append("subject", "Nueva consulta de cliente - Syntrax Software");
     formData.append("from_name", "Syntrax Web");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        body: formData // Enviamos FormData directo, sin cabeceras manuales
       });
 
       const data = await response.json();
+      
+      // Logeamos TODO para saber qué está pasando
+      console.log("--- DEBUG WEB3FORMS ---");
+      console.log("Status Code:", response.status);
+      console.log("Response Data:", data);
+      console.log("------------------------");
 
       if (data.success) {
         setStatus('success');
-        (e.target as HTMLFormElement).reset();
-        // Nota: Los CustomDropdown no se resetearán visualmente sin cambios adicionales, 
-        // pero los valores enviados serán correctos en el próximo envío.
+        e.currentTarget.reset();
       } else {
         setStatus('error');
       }
     } catch (error) {
-      console.error("Error enviando el formulario:", error);
+      console.error("Fetch error:", error);
       setStatus('error');
     } finally {
       setLoading(false);
@@ -176,12 +178,12 @@ const ContactForm: React.FC = () => {
           
           <div className="space-y-5">
             <div>
-              <label className="sr-only" htmlFor="nombre">Nombre</label>
+              <label className="sr-only" htmlFor="name">Nombre</label>
               <input 
                 required
                 className="w-full bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-stone-400 dark:text-white"
-                id="nombre" 
-                name="nombre" 
+                id="name" 
+                name="name" 
                 placeholder="Nombre" 
                 type="text" 
               />
@@ -215,17 +217,17 @@ const ContactForm: React.FC = () => {
             />
 
             <div>
-              <label className="sr-only" htmlFor="mensaje">Mensaje</label>
+              <label className="sr-only" htmlFor="message">Mensaje</label>
               <textarea 
                 required
                 className="w-full bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-stone-400 dark:text-white min-h-[150px] hover:border-stone-300 dark:hover:border-stone-700"
-                id="mensaje" 
-                name="mensaje" 
+                id="message" 
+                name="message" 
                 placeholder="Mensaje" 
                 rows={5}
               ></textarea>
             </div>
-            <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+            <input type="text" name="botcheck" style={{ display: 'none' }} />
 
             <button 
               disabled={loading}
